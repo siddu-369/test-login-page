@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" />
+      <br />
+      <label for="mobileNumber">Mobile Number:</label>
+      <input type="text" id="mobileNumber" name="mobileNumber" />
+      <br />
+      <label for="otp">OTP:</label>
+      <input type="text" id="otp" name="otp" />
+      <br />
+      <button type="button" onclick="login()">Submit</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+      function login() {
+        var email = document.getElementById("email").value;
+        var mobileNumber = document.getElementById("mobileNumber").value;
+        var otp = document.getElementById("otp").value;
+
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            mobileNumber: mobileNumber,
+            otp: otp,
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("message").innerText = data.message;
+          });
+      }
+    </script>
+  </body>
+</html>
